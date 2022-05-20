@@ -53,8 +53,8 @@ class HikkaDLMod(loader.Module):
     async def _wss(self):
         logger.debug("Connecting to HikkaDL websocket....")
         async with websockets.connect(
-            f"wss://hikka.hikariatama.ru/ws/{self.get('token')}"
-        ) as wss:
+                f"wss://hikka.hikariatama.ru/ws/{self.get('token')}"
+            ) as wss:
             while True:
                 ans = json.loads(await wss.recv())
                 self._connected = True
@@ -75,7 +75,8 @@ class HikkaDLMod(loader.Module):
                         link = re.search(
                             r".dlmod (https://[^ ]*\.py)",
                             msg.raw_text,
-                        ).group(1)
+                        )[1]
+
                     except Exception:
                         await wss.send("link_404")
                         continue
