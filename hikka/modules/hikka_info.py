@@ -120,12 +120,12 @@ class HikkaInfoMod(loader.Module):
 
     def _get_mark(self):
         return (
-            None
-            if not self.config["custom_button"]
-            else {
+            {
                 "text": self.config["custom_button"].split("|")[0],
                 "url": self.config["custom_button"].split("|")[1],
             }
+            if self.config["custom_button"]
+            else None
         )
 
     @loader.inline_everyone
@@ -147,11 +147,9 @@ class HikkaInfoMod(loader.Module):
             message=message,
             text=self._render_info(),
             reply_markup=self._get_mark(),
-            **(
-                {"photo": "https://i.imgur.com/XYNawuK.jpeg"}
-                if not self.config["disable_banner"]
-                else {}
-            ),
+            **{}
+            if self.config["disable_banner"]
+            else {"photo": "https://i.imgur.com/XYNawuK.jpeg"}
         )
 
     @loader.unrestricted
